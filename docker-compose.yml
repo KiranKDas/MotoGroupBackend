@@ -1,0 +1,182 @@
+services:
+  # --- Database Services ---
+  postgres-identity:
+    image: postgres:15
+    container_name: motogroup_db_identity
+    environment:
+      POSTGRES_USER: motouser
+      POSTGRES_PASSWORD: motopassword
+      POSTGRES_DB: identitydb
+    ports:
+      - "5432:5432" 
+    volumes:
+      - postgres_identity_data:/var/lib/postgresql/data
+    networks:
+      - motogroup-network
+
+  postgres-event:
+    image: postgres:15
+    container_name: motogroup_db_event
+    environment:
+      POSTGRES_USER: motouser
+      POSTGRES_PASSWORD: motopassword
+      POSTGRES_DB: eventdb
+    ports:
+      - "5433:5432" 
+    volumes:
+      - postgres_event_data:/var/lib/postgresql/data
+    networks:
+      - motogroup-network
+
+  postgres-garage:
+    image: postgres:15
+    container_name: motogroup_db_garage
+    environment:
+      POSTGRES_USER: motouser
+      POSTGRES_PASSWORD: motopassword
+      POSTGRES_DB: garagedb
+    ports:
+      - "5434:5432" 
+    volumes:
+      - postgres_garage_data:/var/lib/postgresql/data
+    networks:
+      - motogroup-network
+
+  postgres-maintenance:
+    image: postgres:15
+    container_name: motogroup_db_maintenance
+    environment:
+      POSTGRES_USER: motouser
+      POSTGRES_PASSWORD: motopassword
+      POSTGRES_DB: maintenancedb
+    ports:
+      - "5435:5432" 
+    volumes:
+      - postgres_maintenance_data:/var/lib/postgresql/data
+    networks:
+      - motogroup-network
+
+  postgres-club:
+    image: postgres:15
+    container_name: motogroup_db_club
+    environment:
+      POSTGRES_USER: motouser
+      POSTGRES_PASSWORD: motopassword
+      POSTGRES_DB: clubdb
+    ports:
+      - "5436:5432" 
+    volumes:
+      - postgres_club_data:/var/lib/postgresql/data
+    networks:
+      - motogroup-network
+
+  # --- API Gateway ---
+  apigateway:
+    build:
+      context: .
+      dockerfile: src/ApiGateway/Dockerfile
+    container_name: motogroup_apigateway
+    ports:
+      - "7000:8080" # Maps host port 7000 to container's HTTP port 8080
+    depends_on:
+      - identityservice
+      - eventservice
+      - garageservice
+      - maintenanceservice
+      - clubservice
+    networks:
+      - motogroup-network
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  # --- Identity Service ---
+  identityservice:
+    build:
+      context: .
+      dockerfile: src/IdentityService/Dockerfile
+    restart: on-failure
+    container_name: motogroup_identity
+    depends_on:
+      - postgres-identity
+    networks:
+      - motogroup-network
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=postgres-identity;Port=5432;Database=identitydb;Username=motouser;Password=motopassword
+      - ASPNETCORE_URLS=http://+:8080
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  # --- Event Service ---
+  eventservice:
+    build:
+      context: .
+      dockerfile: src/EventService/Dockerfile
+    restart: on-failure
+    container_name: motogroup_event
+    depends_on:
+      - postgres-event
+    networks:
+      - motogroup-network
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=postgres-event;Port=5432;Database=eventdb;Username=motouser;Password=motopassword
+      - ASPNETCORE_URLS=http://+:8080
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  # --- Garage Service ---
+  garageservice:
+    build:
+      context: .
+      dockerfile: src/GarageService/Dockerfile
+    restart: on-failure
+    container_name: motogroup_garage
+    depends_on:
+      - postgres-garage
+    networks:
+      - motogroup-network
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=postgres-garage;Port=5432;Database=garagedb;Username=motouser;Password=motopassword
+      - ASPNETCORE_URLS=http://+:8080
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  # --- Maintenance Service ---
+  maintenanceservice:
+    build:
+      context: .
+      dockerfile: src/MaintenanceService/Dockerfile
+    restart: on-failure
+    container_name: motogroup_maintenance
+    depends_on:
+      - postgres-maintenance
+    networks:
+      - motogroup-network
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=postgres-maintenance;Port=5432;Database=maintenancedb;Username=motouser;Password=motopassword
+      - ASPNETCORE_URLS=http://+:8080
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  # --- Club Service ---
+  clubservice:
+    build:
+      context: .
+      dockerfile: src/ClubService/Dockerfile
+    restart: on-failure
+    container_name: motogroup_club
+    depends_on:
+      - postgres-club
+    networks:
+      - motogroup-network
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=postgres-club;Port=5432;Database=clubdb;Username=motouser;Password=motopassword
+      - ASPNETCORE_URLS=http://+:8080
+      - ASPNETCORE_ENVIRONMENT=Development
+
+volumes:
+  postgres_identity_data:
+  postgres_event_data:
+  postgres_garage_data:
+  postgres_maintenance_data:
+  postgres_club_data:
+
+networks:
+  motogroup-network:
+    driver: bridge

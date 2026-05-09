@@ -1,0 +1,8 @@
+C:\Users\kiran\source\repos\MotoGroup\src\GarageService\obj\Debug\net9.0\GarageService.csproj.AssemblyReference.cache
+C:\Users\kiran\source\repos\MotoGroup\src\GarageService\obj\Debug\net9.0\rpswa.dswa.cache.json
+C:\Users\kiran\source\repos\MotoGroup\src\GarageService\obj\Debug\net9.0\GarageService.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\kiran\source\repos\MotoGroup\src\GarageService\obj\Debug\net9.0\GarageService.AssemblyInfoInputs.cache
+C:\Users\kiran\source\repos\MotoGroup\src\GarageService\obj\Debug\net9.0\GarageService.AssemblyInfo.cs
+C:\Users\kiran\source\repos\MotoGroup\src\GarageService\obj\Debug\net9.0\GarageService.csproj.CoreCompileInputs.cache
+C:\Users\kiran\source\repos\MotoGroup\src\GarageService\obj\Debug\net9.0\GarageService.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\kiran\source\repos\MotoGroup\src\GarageService\obj\Debug\net9.0\GarageService.MvcApplicationPartsAssemblyInfo.cache

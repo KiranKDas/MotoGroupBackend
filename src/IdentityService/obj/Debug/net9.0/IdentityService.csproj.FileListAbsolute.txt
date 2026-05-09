@@ -1,0 +1,8 @@
+C:\Users\kiran\source\repos\MotoGroup\src\IdentityService\obj\Debug\net9.0\IdentityService.csproj.AssemblyReference.cache
+C:\Users\kiran\source\repos\MotoGroup\src\IdentityService\obj\Debug\net9.0\rpswa.dswa.cache.json
+C:\Users\kiran\source\repos\MotoGroup\src\IdentityService\obj\Debug\net9.0\IdentityService.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\kiran\source\repos\MotoGroup\src\IdentityService\obj\Debug\net9.0\IdentityService.AssemblyInfoInputs.cache
+C:\Users\kiran\source\repos\MotoGroup\src\IdentityService\obj\Debug\net9.0\IdentityService.AssemblyInfo.cs
+C:\Users\kiran\source\repos\MotoGroup\src\IdentityService\obj\Debug\net9.0\IdentityService.csproj.CoreCompileInputs.cache
+C:\Users\kiran\source\repos\MotoGroup\src\IdentityService\obj\Debug\net9.0\IdentityService.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\kiran\source\repos\MotoGroup\src\IdentityService\obj\Debug\net9.0\IdentityService.MvcApplicationPartsAssemblyInfo.cache
