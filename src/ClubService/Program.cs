@@ -1,10 +1,13 @@
 using ClubService.Data;
 using Microsoft.EntityFrameworkCore;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add controllers to the service container
 builder.Services.AddControllers();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 // Configure PostgreSQL database context (ensure you add the connection string to appsettings.json)
 builder.Services.AddDbContext<ClubDbContext>(options =>
@@ -29,5 +32,12 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.UseCors("AllowFrontend");
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger(options => { options.RouteTemplate = "openapi/{documentName}.json"; });
+    app.MapScalarApiReference();
+}
+
 app.MapControllers();
 app.Run();
