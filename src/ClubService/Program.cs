@@ -35,8 +35,12 @@ app.UseCors("AllowFrontend");
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger(options => { options.RouteTemplate = "openapi/{documentName}.json"; });
-    app.MapScalarApiReference();
+    app.UseSwagger(options => { options.RouteTemplate = "clubs/openapi/{documentName}.json"; });
+    app.MapScalarApiReference("/clubs/scalar", options =>
+    {
+        options.WithOpenApiRoutePattern("/clubs/openapi/{documentName}.json");
+    });
+    app.MapGet("/clubs/scalar", () => Results.Redirect("/clubs/scalar/v1")).ExcludeFromDescription();
 }
 
 app.MapControllers();
